@@ -1,5 +1,5 @@
 import { Tag } from '@chakra-ui/react';
-import React from 'react';
+import { forwardRef } from 'react';
 import { ITag } from '../../../../typings/tag.ts';
 
 interface IVideoTagProps {
@@ -8,10 +8,15 @@ interface IVideoTagProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const VideoTag: React.FC<IVideoTagProps> = ({ tag, onClick, size = 'md' }) => {
-  return <Tag key={tag.cid} colorScheme={tag.cate?.color} size={size} cursor="pointer" onClick={() => {
-    onClick?.(tag);
-  }}>
+export const VideoTag = forwardRef<HTMLSpanElement, IVideoTagProps>(({
+                                                                       tag,
+                                                                       onClick,
+                                                                       size = 'md'
+                                                                     }, ref) => {
+  return <Tag ref={ref} key={tag.cid} colorScheme={tag.cate?.color} size={size} cursor={onClick ? 'pointer' : undefined}
+              onClick={() => {
+                onClick?.(tag);
+              }}>
     {`${tag.cate && tag.cate.displayName + '：'}${tag.displayName}`}
   </Tag>;
-};
+});

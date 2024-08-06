@@ -22,14 +22,12 @@ const Index = () => {
         {videoList.length > 0 ? videoList.map((video) => (
             <GridItem
               key={video.nid}
-              className="cursor-pointer"
-              onClick={() => {
+            >
+              <VideoItem video={video} onClick={() => {
                 void navigate({
                   to: `/video/${video.nid}`
                 });
-              }}
-            >
-              <VideoItem video={video} />
+              }} />
             </GridItem>
           )) :
           Array.from({ length: 20 }, (_, i) => i).map((i) => <GridItem
