@@ -14,7 +14,6 @@ interface IVideoTagAddButtonProps {
 }
 
 export const VideoTagAddButton: React.FC<IVideoTagAddButtonProps> = ({ video, onFinish }) => {
-
   const toast = useToast();
 
   const [tagListData, setTagListData] = useState<ITag[]>([]);
@@ -31,29 +30,39 @@ export const VideoTagAddButton: React.FC<IVideoTagAddButtonProps> = ({ video, on
         onFinish?.();
         return resp.code === 304 ? { title: '标签已存在' } : { title: '添加成功' };
       },
-      error: { title: '添加失败' },
-      loading: { title: '添加中...' }
+      error: (err) => {
+        return {
+          title: '添加失败',
+          description: err.message,
+        };
+      },
+      loading: { title: '添加中...' },
     });
   };
 
-  return <Popover>
-    <PopoverTrigger>
-      <IconButton aria-label="增加标签" icon={<Icon as={Plus} />} size="sm" isRound />
-    </PopoverTrigger>
-    <PopoverContent>
-      <PopoverBody>
-        <Virtuoso
-          style={{ height: 150 }}
-          data={tagListData}
-          itemContent={(_, tag) => (
-            <div key={tag.cid} className="p-1">
-              <VideoTag tag={tag} onClick={() => {
-                void handleAddTagToVideo(tag.cid);
-              }} />
-            </div>
-          )}
-        />
-      </PopoverBody>
-    </PopoverContent>
-  </Popover>;
+  return (
+    <Popover>
+      <PopoverTrigger>
+        <IconButton aria-label="增加标签" icon={<Icon as={Plus} />} size="sm" isRound />
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverBody>
+          <Virtuoso
+            style={{ height: 150 }}
+            data={tagListData}
+            itemContent={(_, tag) => (
+              <div key={tag.cid} className="p-1">
+                <VideoTag
+                  tag={tag}
+                  onClick={() => {
+                    void handleAddTagToVideo(tag.cid);
+                  }}
+                />
+              </div>
+            )}
+          />
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
+  );
 };

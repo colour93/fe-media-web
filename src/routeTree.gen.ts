@@ -18,6 +18,7 @@ import { Route as rootRoute } from './routes/__root'
 
 const IndexLazyImport = createFileRoute('/')()
 const VideoVideoNidLazyImport = createFileRoute('/video/$videoNid')()
+const ManageTagCateIndexLazyImport = createFileRoute('/manage/tag/cate/')()
 
 // Create/Update Routes
 
@@ -31,6 +32,13 @@ const VideoVideoNidLazyRoute = VideoVideoNidLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/video/$videoNid.lazy').then((d) => d.Route),
+)
+
+const ManageTagCateIndexLazyRoute = ManageTagCateIndexLazyImport.update({
+  path: '/manage/tag/cate/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/manage/tag/cate/index.lazy').then((d) => d.Route),
 )
 
 // Populate the FileRoutesByPath interface
@@ -51,6 +59,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideoVideoNidLazyImport
       parentRoute: typeof rootRoute
     }
+    '/manage/tag/cate/': {
+      id: '/manage/tag/cate/'
+      path: '/manage/tag/cate'
+      fullPath: '/manage/tag/cate'
+      preLoaderRoute: typeof ManageTagCateIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -59,6 +74,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   VideoVideoNidLazyRoute,
+  ManageTagCateIndexLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -70,7 +86,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/video/$videoNid"
+        "/video/$videoNid",
+        "/manage/tag/cate/"
       ]
     },
     "/": {
@@ -78,6 +95,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/video/$videoNid": {
       "filePath": "video/$videoNid.lazy.tsx"
+    },
+    "/manage/tag/cate/": {
+      "filePath": "manage/tag/cate/index.lazy.tsx"
     }
   }
 }
