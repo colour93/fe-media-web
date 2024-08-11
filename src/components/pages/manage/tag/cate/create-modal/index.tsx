@@ -21,15 +21,15 @@ import {
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ICreateTagCate, ICreateTagCateSchema } from '../../../../../../form-schemas/manage/create-tag-cate.ts';
+import { ICreateTagCate, createTagCateSchema } from '../../../../../../form-schemas/manage/create-tag-cate.ts';
 import { createTagCate } from '../../../../../../apis/manage/tag-cate.ts';
 import { Plus } from 'lucide-react';
 
-interface IManageCreateModalProps {
+interface IManageCreateTagCateModalProps {
   onFinish?: () => void | Promise<void>;
 }
 
-export const ManageCreateTagCateModal: React.FC<IManageCreateModalProps> = ({ onFinish }) => {
+export const ManageCreateTagCateModal: React.FC<IManageCreateTagCateModalProps> = ({ onFinish }) => {
   const COLORS = [
     'whiteAlpha',
     'blackAlpha',
@@ -52,7 +52,7 @@ export const ManageCreateTagCateModal: React.FC<IManageCreateModalProps> = ({ on
     register,
     formState: { errors, isSubmitting },
   } = useForm<ICreateTagCate>({
-    resolver: zodResolver(ICreateTagCateSchema),
+    resolver: zodResolver(createTagCateSchema),
   });
 
   const toast = useToast();

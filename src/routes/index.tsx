@@ -1,4 +1,4 @@
-import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { IVideo } from '../typings/video';
 import { getVideoList } from '../apis/video';
@@ -42,6 +42,6 @@ const Index = () => {
   );
 };
 
-export const Route = createLazyFileRoute('/')({
+export const Route = createFileRoute('/')({
   component: Index
 });

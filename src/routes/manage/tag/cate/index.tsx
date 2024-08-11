@@ -15,7 +15,7 @@ import {
   IconButton,
   Icon,
 } from '@chakra-ui/react';
-import { createLazyFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import React, { useEffect, useState } from 'react';
 import { ITagCate } from '../../../../typings/tag-cate.ts';
 import { getManageTagCateList } from '../../../../apis/manage/tag-cate.ts';
@@ -106,6 +106,6 @@ const TagCateManagePage: React.FC = () => {
   );
 };
 
-export const Route = createLazyFileRoute('/manage/tag/cate/')({
+export const Route = createFileRoute('/manage/tag/cate/')({
   component: TagCateManagePage,
 });

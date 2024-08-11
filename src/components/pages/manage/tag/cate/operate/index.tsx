@@ -16,9 +16,10 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { Ellipsis, FilePenLine, Trash } from 'lucide-react';
+import { Ellipsis, FilePenLine, FolderCog, Trash } from 'lucide-react';
 import { ITagCate } from '../../../../../../typings/tag-cate.ts';
 import { deleteTagCate } from '../../../../../../apis/manage/tag-cate.ts';
+import { Link } from '@tanstack/react-router';
 
 interface IManageTagCateOperateProps {
   tagCate: ITagCate;
@@ -56,6 +57,14 @@ export const ManageTagCateOperate: React.FC<IManageTagCateOperateProps> = ({ tag
       <Menu isLazy>
         <MenuButton as={IconButton} aria-label="操作" icon={<Icon as={Ellipsis} />} variant="outline" />
         <MenuList>
+          <Link
+            search={{
+              tagCateCid: tagCate.cid,
+            }}
+            to="/manage/tag"
+          >
+            <MenuItem icon={<Icon as={FolderCog} />}>管理标签</MenuItem>
+          </Link>
           <MenuItem icon={<Icon as={FilePenLine} />}>编辑</MenuItem>
           <MenuItem color="red" icon={<Icon as={Trash} />} onClick={onDeleteAlertOpen}>
             删除
